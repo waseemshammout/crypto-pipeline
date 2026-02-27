@@ -3,8 +3,6 @@ import pandas as pd
 from datetime import datetime
 from sqlalchemy import create_engine
 
-# DATABASE_URL = "postgresql+psycopg2://user:password@host:port/db"
-DATABASE_URL = "postgresql+psycopg2://avnadmin:AVNS_kQ8vk-ThEhAGFLfCArg@pg-waseem-service-wshammout.e.aivencloud.com:18254/defaultdb"
 engine = create_engine(DATABASE_URL)
 print('Successfully connected to remote database!')
 

@@ -12,7 +12,7 @@ load_dotenv()
 DATABASE_URL = os.getenv("DATABASE_URL")
 
 
-@task(retries=3, retry_delay_seconds=10)
+@task(retries=3, retry_delay_seconds=5)
 def get_prices(pairs):
     logger = get_run_logger()
     logger.info(f"Fetching prices for pairs: {pairs}")
@@ -27,6 +27,13 @@ def get_prices(pairs):
     ]
     logger.info(f"Fetched {len(filtered)} records")
     return filtered
+
+@task
+def transform_data(raw_data):
+    df = pd.DataFrame(raw_data)
+    df["timestamp"] = datetime.now(timezone.utc)
+    df["symbol"] = df["symbol"].str.replace("USDC", "")
+    return df
 
 
 @task
@@ -50,18 +57,15 @@ def save_to_db(data):
         logger.error(f"Database error: {e}")
         raise
 
-
 @flow
 def crypto_pipeline():
     pairs = ["BTCUSDC", "ETHUSDC", "SOLUSDC", "XRPUSDC", "BNBUSDC", "ADAUSDC"]
 
     raw_data = get_prices(pairs)
 
-    df = pd.DataFrame(raw_data)
-    df["timestamp"] = datetime.now(timezone.utc)
-    df["symbol"] = df["symbol"].str.replace("USDC", "")
+    processed_df = transform_data(raw_data)
 
-    save_to_db(df)
+    save_to_db(processed_df)
 
 
 if __name__ == "__main__":

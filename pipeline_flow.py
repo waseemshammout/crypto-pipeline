@@ -28,6 +28,7 @@ def get_prices(pairs):
     logger.info(f"Fetched {len(filtered)} records")
     return filtered
 
+
 @task
 def transform_data(raw_data):
     df = pd.DataFrame(raw_data)
@@ -48,24 +49,31 @@ def save_to_db(data):
             pool_size=5,
             max_overflow=10,
         )
-        logger.info("Connecting to database...")
+        # logger.info("Connecting to database...")
         engine.connect()
-        logger.info("Connected successfully!")
+        # logger.info("Connected successfully!")
         data.to_sql("fact_crypto_prices", con=engine, if_exists="append", index=False)
-        logger.info("Prices saved successfully!")
+        # logger.info("Prices saved successfully!")
     except SQLAlchemyError as e:
         logger.error(f"Database error: {e}")
         raise
 
+
 @flow
 def crypto_pipeline():
-    pairs = ["BTCUSDC", "ETHUSDC", "SOLUSDC", "XRPUSDC", "BNBUSDC", "ADAUSDC"]
+    logger = get_run_logger()
+    pairs = ["BTCUSDC", "ETHUSDC", "SOLUSDC", "XRPUSDC", "BNBUSDC", "ADAUSDC", "PEPEUSDC","ASTERUSDC"]
 
-    raw_data = get_prices(pairs)
-
-    processed_df = transform_data(raw_data)
-
-    save_to_db(processed_df)
+    try:
+        raw_data = get_prices(pairs)
+        processed_df = transform_data(raw_data)
+        save_to_db(processed_df)
+        logger.info(
+            f"✅ PIPELINE SUCCESS: Processed {len(processed_df)} symbols at {datetime.now(timezone.utc)}")
+    except Exception as e:
+        logger.error(
+            f"❌ PIPELINE FAILURE: Flow failed during execution. Error: {str(e)}")
+        raise
 
 
 if __name__ == "__main__":

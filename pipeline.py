@@ -9,19 +9,6 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-if not DATABASE_URL:
-    raise ValueError("DATABASE_URL is not set")
-else:
-    engine = create_engine(
-        DATABASE_URL,
-        pool_pre_ping=True,
-        pool_size=5,
-        max_overflow=10,
-    )
-    print("Connecting...")
-    engine.connect()
-    print('Connected successfully!')
-
 def get_prices(pairs):
     api_url = f"https://api.binance.com/api/v3/ticker/price"
     response = requests.get(url=api_url)
@@ -33,11 +20,27 @@ def get_prices(pairs):
         if item["symbol"] in pairs
     ]
 
-pairs = ["BTCUSDC", "ETHUSDC", "SOLUSDC", "XRPUSDC", "BNBUSDC", "ADAUSDC"]
+try:
+    if not DATABASE_URL:
+        raise ValueError("DATABASE_URL is not set")
+    else:
+        engine = create_engine(
+            DATABASE_URL,
+            pool_pre_ping=True,
+            pool_size=5,
+            max_overflow=10,
+        )
+        print("Connecting...")
+        engine.connect()
+        print("Connected successfully!")
 
-data = pd.DataFrame(get_prices(pairs))
-data["symbol"] = data["symbol"].str.replace("USDC", "")
-data["timestamp"] = datetime.now()
+    pairs = ["BTCUSDC", "ETHUSDC", "SOLUSDC", "XRPUSDC", "BNBUSDC", "ADAUSDC"]
 
-data.to_sql("fact_crypto_prices", con=engine, if_exists="append", index=False)
-print("Prices saved successfully!")
+    data = pd.DataFrame(get_prices(pairs))
+    data["timestamp"] = datetime.now()
+    data["symbol"] = data["symbol"].str.replace("USDC", "")
+
+    data.to_sql("fact_crypto_prices", con=engine, if_exists="append", index=False)
+    print("Prices saved successfully!")
+except Exception as e:
+    print("Error occured:", type(e).__name__)

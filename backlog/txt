@@ -26,6 +26,8 @@ Story: Database Load Logic
     Task: Write an "Upsert" function using SQLAlchemy to insert data into Postgres.
     Task: Implement error handling for database connection timeouts.
 
+--------------------------------------------------
+
 🚀 Epic 3: Orchestration with Prefect
 Goal: Turn the script into a reliable, scheduled pipeline.
 

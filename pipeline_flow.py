@@ -77,4 +77,10 @@ def crypto_pipeline():
 
 
 if __name__ == "__main__":
-    crypto_pipeline()
+    # This keeps the script alive and runs the flow every 60 seconds
+    crypto_pipeline.serve(
+        name="crypto-etl-local-deployment",
+        interval=60,  # 60 seconds = 1 minute
+        tags=["local-development", "crypto-price-tracker"],
+        description="Fetches Binance prices every minute and upserts to Aiven Postgres."
+    )

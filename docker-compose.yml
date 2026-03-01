@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  crypto-pipeline:
+    build: .
+    container_name: crypto_etl_runner
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - PREFECT_API_URL=http://host.docker.internal:4200/api
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

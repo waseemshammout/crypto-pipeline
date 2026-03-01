@@ -1,0 +1,5 @@
+pandas
+prefect
+sqlalchemy
+requests
+dotenv

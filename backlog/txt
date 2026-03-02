@@ -40,6 +40,8 @@ Story: Resilience and Retries
 Story: Scheduling
     Task: Implement a 1-minute interval schedule using Prefect’s deployment settings or flow.serve().
 
+----------------------------------------------------
+
 📦 Epic 4: Containerization & Deployment
 Goal: Make the project portable and "production-ready."
 
@@ -50,6 +52,8 @@ Story: Local Deployment Test
     Task: Run the entire pipeline inside a Docker container and monitor the remote DB for updates.
 Story: (Bonus) GitHub Actions CI
     Task: Create a workflow to lint the code (Flake8/Black) on every push.
+
+----------------------------------------------------
 
 📝 Epic 5: Documentation & Presentation
 Goal: Sell the project to a hiring manager.

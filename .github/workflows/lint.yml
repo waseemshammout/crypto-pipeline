@@ -1,0 +1,24 @@
+name: CI Linter
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: uses/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install Linting Tools
+        run: pip install flake8 black
+
+      - name: Run Black (Formatting Check)
+        run: black --check .
+
+      - name: Run Flake8 (Logic/Style Check)
+        run: flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics

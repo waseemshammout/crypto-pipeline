@@ -3,3 +3,4 @@ prefect
 sqlalchemy
 requests
 dotenv
+psycopg2-binary

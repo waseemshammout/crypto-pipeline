@@ -1,6 +1,6 @@
-pandas
-prefect
-sqlalchemy
-requests
-dotenv
-psycopg2-binary
+pandas==3.0.1
+prefect==3.6.20
+sqlalchemy==2.0.47
+requests==2.32.5
+dotenv==0.9.9
+psycopg2-binary==2.9.11

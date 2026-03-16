@@ -41,10 +41,14 @@ PREFECT_API_URL=[http://host.docker.internal:4200/api](http://host.docker.intern
 ```bash
 prefect server start --host 0.0.0.0
 ```
-* Build and run the containerized pipeline
+* Build containerized pipeline
 ```bash
-docker-compose up --build -d
+docker-compose build
 ```
+* Run the containerized pipeline
+```bash
+docker-compose up -d
+
 * Monitor process logs
 ```bash
 docker logs -f crypto_etl_runner

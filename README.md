@@ -48,7 +48,7 @@ docker-compose build
 * Run the containerized pipeline
 ```bash
 docker-compose up -d
-
+```
 * Monitor process logs
 ```bash
 docker logs -f crypto_etl_runner

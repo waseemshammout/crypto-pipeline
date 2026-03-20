@@ -17,6 +17,11 @@ graph TD
 
 ```
 
+## Dashboard Preview
+![crypto-pipeline](assets/1-3.PNG)
+![crypto-pipeline](assets/2-3.PNG)
+![crypto-pipeline](assets/3-3.PNG)
+
 # Tech Stack
 * Language: Python 3.11
 * Orchestration: Prefect (Scheduled 1min intervals)

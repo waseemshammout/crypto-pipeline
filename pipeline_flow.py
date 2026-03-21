@@ -62,7 +62,7 @@ def save_to_db(data):
 @flow
 def crypto_pipeline():
     logger = get_run_logger()
-    pairs = ["BTCUSDC", "ETHUSDC", "SOLUSDC", "XRPUSDC", "BNBUSDC", "ADAUSDC", "PEPEUSDC","ASTERUSDC"]
+    pairs = ["BTCUSDC", "ETHUSDC", "SOLUSDC", "XRPUSDC", "BNBUSDC", "ADAUSDC"]
 
     try:
         raw_data = get_prices(pairs)

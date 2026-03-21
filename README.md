@@ -38,7 +38,6 @@ graph TD
 
 ```bash
 DATABASE_URL=postgresql://user:pass@host:port/dbname
-PREFECT_API_URL=[http://host.docker.internal:4200/api](http://host.docker.internal:4200/api)
 
 ```
 ## 3. Launch
@@ -57,3 +56,8 @@ docker-compose up -d
 * Monitor process logs
 ```bash
 docker logs -f crypto_etl_runner
+```
+* Launch Dashboard
+```bash
+streamlit run dashboard/app.py --server.port=8501 --server.address=0.0.0.0
+```
